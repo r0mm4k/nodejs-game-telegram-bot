@@ -1,15 +1,19 @@
 {
   "name": "nodejs-game-telegram-bot",
   "version": "1.0.0",
-  "description": "",
+  "description": "Node.js Game Telegram Bot",
   "main": "index.js",
   "scripts": {
     "dev": "nodemon index.js",
     "start": "node index.js"
   },
-  "keywords": [],
-  "author": "",
+  "author": "r0mm4k",
   "license": "ISC",
+  "homepage": "https://github.com/r0mm4k/nodejs-game-telegram-bot#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/r0mm4k/nodejs-game-telegram-bot.git"
+  },
   "dependencies": {
     "dotenv": "^10.0.0",
     "node-telegram-bot-api": "^0.53.0",
