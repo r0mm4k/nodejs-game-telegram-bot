@@ -1,4 +1,5 @@
 const TelegramApi = require('node-telegram-bot-api');
+const {gameOptions, againOptions} = require('./options');
 require('dotenv').config();
 
 const TOKEN = process.env.TELEGRAM_TOKEN || 'YOUR_TELEGRAM_BOT_TOKEN';
@@ -6,6 +7,13 @@ const TOKEN = process.env.TELEGRAM_TOKEN || 'YOUR_TELEGRAM_BOT_TOKEN';
 const bot = new TelegramApi(TOKEN, { polling: true });
 
 const chats = {};
+
+const startGame = async (chatId) => {
+    await bot.sendMessage(chatId, 'Сейчас я загадаю цифру от 0 до 9, а ты должен ее угадать.');
+
+    chats[chatId] = Math.floor(Math.random() * 10);
+    await bot.sendMessage(chatId, 'Угадывай... 😁', gameOptions);
+}
 
 const start = async () => {
     await bot.setMyCommands([
@@ -26,10 +34,7 @@ const start = async () => {
                 break;
             }
             case '/game': {
-                await bot.sendMessage(id, 'Сейчас я загадаю цифру от 0 до 9, а ты должен ее угадать.');
-
-                chats[id] = Math.floor(Math.random() * 10);
-                await bot.sendMessage(id, 'Угадывай... 😁');
+                await startGame(id);
                 break;
             }
             default: {
@@ -38,6 +43,23 @@ const start = async () => {
             }
         }
     });
+
+    bot.on('callback_query', async ({ message: { chat: { id } }, data }) => {
+        switch (data) {
+            case String(chats[id]): {
+                await bot.sendMessage(id, `Поздравляю!!! Ты отгадал цифру - ${data}.`, againOptions);
+                break;
+            }
+            case '/again': {
+                await startGame(id);
+                break;
+            }
+            default: {
+                await bot.sendMessage(id, `К сожалению, ты не угадал... Бот загадал цифру - ${chats[id]}.`, againOptions);
+                break;
+            }
+        }
+    })
 };
 
 start();
