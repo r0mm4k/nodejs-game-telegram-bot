@@ -7,7 +7,7 @@
 Solutions to Ulbi TV's "Telegram BOT in JavaScript in 15 minutes" projects.
 
 ## ✨ Demo
-Look [live-demo](https://t.me/r0mm4k_bot) example.
+Look [live-demo](https://t.me/r0mm4k_game_bot) example.
 
 ## 🚀 Usage
 
