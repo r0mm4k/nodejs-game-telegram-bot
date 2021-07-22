@@ -36,7 +36,8 @@ const start = async () => {
         try {
             switch (text) {
                 case '/start': {
-                    await UserModel.create({ chatId: id });
+                    const user = await UserModel.findOne({ chatId: id });
+                    !user && await UserModel.create({ chatId: id });
                     await bot.sendSticker(id, 'https://tlgrm.ru/_/stickers/633/5c5/6335c5a3-81a4-3786-bb3c-701aa8335d38/2.webp')
                     await bot.sendMessage(id, 'Добро пожаловать в телеграм бот (авт. r0mm4k).');
                     break;
